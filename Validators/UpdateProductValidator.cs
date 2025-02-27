@@ -5,6 +5,8 @@ namespace product_api.Validators;
 
 public class UpdateProductValidator : AbstractValidator<(int, UpdateProductDTO)>
 {
+    // TODO: Create Test case for testing product name min/max length - would normally use a faker lib to generate the strings
+
     public UpdateProductValidator()
     {
         RuleFor(x => x.Item1)

@@ -124,7 +124,7 @@ public class ProductServiceTests
     }
 
     [Fact]
-    public async Task UpdateProductAsync_ProductExist_UpdatesProductAndReturnsTrue()
+    public async Task UpdateProductAsync_ProductExists_UpdatesProductAndReturnsTrue()
     {
         // Arrange
         var productId = 1;
