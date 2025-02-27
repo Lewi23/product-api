@@ -7,6 +7,8 @@ namespace product_api.Tests.Validators;
 
 public class UpdateProductValidatorTests
 {
+    // TODO: Create Test case for testing product name min/max length - would normally use a faker lib to generate the strings
+
     [Fact]
     public void UpdateProductValidator_InvalidUserId_ThrowsValidationException()
     {
