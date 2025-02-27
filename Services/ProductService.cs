@@ -42,7 +42,7 @@ public class ProductService : IProductService
     }
 
     // Using bool for simplicity, could use result pattern etc
-    public async Task<bool> UpdateProductAsync(int productId, UpdateProductDTO updateProductDTO)
+    public async Task<bool> UpdateProductAsync(int productId, UpdateProductDTO updateProductDto)
     {
         var productToUpdate = await _dbContext.Products
             .FirstOrDefaultAsync(x => x.Id == productId);
@@ -52,9 +52,9 @@ public class ProductService : IProductService
             return false;
         }
 
-        productToUpdate.Name = updateProductDTO.Name;
-        productToUpdate.Price = updateProductDTO.Price;
-        productToUpdate.Stock = updateProductDTO.Stock;
+        productToUpdate.Name = updateProductDto.Name;
+        productToUpdate.Price = updateProductDto.Price;
+        productToUpdate.Stock = updateProductDto.Stock;
 
         await _dbContext.SaveChangesAsync();
         return true;
