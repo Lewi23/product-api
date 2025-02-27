@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using product_api.Middleware;
 using product_api.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<RequestLoggingMiddleware>();
 
 app.UseHttpsRedirection();
 
