@@ -149,7 +149,7 @@ public class ProductServiceTests
         Assert.True(result);
 
         var updatedProduct = await _dbContext.Products
-            .FirstOrDefaultAsync(x => x.Id == 1);
+            .FirstOrDefaultAsync(x => x.Id == productId);
 
         Assert.Equal(dto.Name, product.Name);
         Assert.Equal(dto.Price, product.Price);
@@ -191,7 +191,7 @@ public class ProductServiceTests
         Assert.True(result);
 
         var productExists = await _dbContext.Products
-            .AnyAsync(x => x.Id == 1);
+            .AnyAsync(x => x.Id == productId);
 
         Assert.False(productExists);
     }
