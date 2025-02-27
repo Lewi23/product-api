@@ -11,6 +11,7 @@ public class UpdateProductValidator : AbstractValidator<(int, UpdateProductDTO)>
             .GreaterThan(0);
 
         RuleFor(x => x.Item2.Name)
+            .NotNull()
             .MinimumLength(3) // products must have a name
             .MaximumLength(255);
 

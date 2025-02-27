@@ -8,6 +8,7 @@ public class CreateProductValidator : AbstractValidator<CreateProductDTO>
     public CreateProductValidator()
     {
         RuleFor(x => x.Name)
+            .NotNull()
             .MinimumLength(3) // products must have a name
             .MaximumLength(255);
 
