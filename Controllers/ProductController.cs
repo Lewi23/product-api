@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using product_api.DTO;
 using product_api.Services;
+using product_api.Validators;
 
 namespace product_api.Controllers;
 
@@ -34,9 +35,16 @@ public class ProductController : ControllerBase // Could introduce custom base c
     /// <returns>A single product</returns>
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetProduct(int id)
     {
+        var validator = await new GetProductValidator().ValidateAsync(id);
+        if (validator.Errors.Count > 0)
+        {
+            return BadRequest(validator.Errors);
+        }
+
         var product = await _productService.GetProductAsync(id);
         if (product is null)
         {
@@ -53,8 +61,15 @@ public class ProductController : ControllerBase // Could introduce custom base c
     /// <returns>201 Created</returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateProduct([FromQuery] CreateProductDTO createProductDto)
     {
+        var validator = await new CreateProductValidator().ValidateAsync(createProductDto);
+        if (validator.Errors.Count > 0)
+        {
+            return BadRequest(validator.Errors);
+        }
+
         await _productService.CreateProductAsync(createProductDto);
         return Created();
     }
@@ -67,9 +82,16 @@ public class ProductController : ControllerBase // Could introduce custom base c
     /// <returns></returns>
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateProduct(int id, [FromBody] UpdateProductDTO updateProductDto)
     {
+        var validator = await new UpdateProductValidator().ValidateAsync((id, updateProductDto));
+        if (validator.Errors.Count > 0)
+        {
+            return BadRequest(validator.Errors);
+        }
+
         var success = await _productService.UpdateProductAsync(id, updateProductDto);
         if (success is false)
         {
@@ -86,9 +108,16 @@ public class ProductController : ControllerBase // Could introduce custom base c
     /// <returns></returns>
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteProduct(int id)
     {
+        var validator = await new DeleteProductValidator().ValidateAsync(id);
+        if (validator.Errors.Count > 0)
+        {
+            return BadRequest(validator.Errors);
+        }
+
         var success = await _productService.DeleteProductAsync(id);
         if (success is false)
         {
